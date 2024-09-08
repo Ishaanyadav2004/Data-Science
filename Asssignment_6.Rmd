@@ -1,0 +1,71 @@
+---
+title: "performane Matrices"
+author: "Ishaan Yadav"
+output:
+  word_document: default
+  html_notebook: default
+---
+Import data
+```{r}
+df<-read.csv("C:/Users/Admin/Downloads/Expt 6- Dataset_wisconsinn breast cancerdata_csv.csv")
+head(df)
+```
+scale the data
+```{r}
+scaled_df<-as.data.frame(scale(df[,3:32]))
+head(scaled_df)
+```
+include the diagnosis columns in scaled_df
+```{r}
+scaled_df$diagnosis<-df$diagnosis
+head(scaled_df)
+```
+split the data into training and testing sets
+```{r}
+library(caTools)
+set.seed(100)
+split_vector<-sample.split(scaled_df$diagnosis,SplitRatio=0.75)
+split_vector
+train_df<-subset(scaled_df,split_vector==T)
+test_df<-subset(scaled_df,split_vector==F)
+```
+
+Apply KNN  algorithm 
+```{r}
+library(class)
+knn_model<-knn(train_df[,-31],test_df[,-31],cl=train_df$diagnosis,k=3)
+knn_model
+```
+Save the prediction in the predictions column in test set
+```{r}
+test_df$predictions<-knn_model
+head(test_df)
+```
+Create a confusion matrix
+```{r}
+confusion_matrix<-table(Actual=test_df$diagnosis,Predictions=test_df$predictions)
+confusion_matrix
+```
+Let  the positive class be "Maligent" and negative class be "Benign"
+Evaluate accuracy
+```{r}
+accuracy<-sum(diag(confusion_matrix))/sum(confusion_matrix)
+cat("Accuray of KNN model is",accuracy*100,"%")
+```
+Evaluate the sensitivity
+```{r}
+sensitivity<-confusion_matrix[2,2]/sum(confusion_matrix[2,])
+cat("sensitivity of KNN model is",sensitivity*100,"%")
+```
+Evaluate the specificity
+```{r}
+specificity<-confusion_matrix[1,1]/sum(confusion_matrix[1,])
+cat("specificity of KNN model is",specificity*100,"%")
+```
+Evaluate the precision
+```{r}
+precision<-confusion_matrix[2,2]/sum(confusion_matrix[,2])
+cat("precision of KNN model is",precision*100,"%")
+```
+
+

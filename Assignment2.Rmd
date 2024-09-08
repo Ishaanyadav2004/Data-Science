@@ -1,0 +1,103 @@
+---
+title: "R Notebook"
+author: "Ishaan Yadav"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+
+
+```{r}
+df<-read.csv("C:/Users/Admin/Downloads/Expt 2- Data set_Travelled abroad_csv.csv")
+head(df)
+```
+1.	Find out the % of Indians in the sample who have travelled abroad using the data source.
+```{r}
+percen=nrow(subset(df,Travelledabroad=='Y'))/nrow(df)*100
+cat("Percentage of Indians in the sample who have tarvelled aboard is :",percen,"%")
+```
+2.	Treating this value as ‘p’, calculate the following probabilities –
+a.	What is the probability that in a randomly chosen sample of 10 persons, no one has travelled abroad?
+
+```{r}
+ans4=dbinom(0,10,0.56)
+ans4
+```
+b.	What is the probability that in a randomly chosen sample of 10 persons, exactly one has travelled abroad?
+```{r}
+ans5=dbinom(1,10,0.56)
+ans5
+```
+c.	What is the probability that in a randomly chosen sample of 10 persons, exactly two persons have travelled abroad?
+```{r}
+ans6=dbinom(2,10,0.56)
+ans6
+```
+d.	What is the probability that in a randomly chosen sample of 10 persons, exactly three persons have travelled abroad?
+```{r}
+```
+
+
+```{r}
+ansd=dbinom(3,10,0.56)
+ansd
+```
+
+e.	What is the probability that in a randomly chosen sample of 10 persons, exactly four persons have travelled abroad?
+
+```{r}
+anse=dbinom(4,10,0.56)
+anse
+```
+f.	What is the probability that in a randomly chosen sample of 10 persons, exactly five persons have travelled abroad.
+```{r}
+ansf=dbinom(5,10,0.56)
+ansf
+```
+g.	What is the probability that in a randomly chosen sample of 10 persons, exactly six persons have travelled abroad?
+```{r}
+ansg=dbinom(6,10,0.56)
+ansg
+```
+h.	What is the probability that in a randomly chosen sample of 10 persons, exactly seven persons have travelled abroad?
+```{r}
+ansh=dbinom(7,10,0.56)
+ansh
+```
+i.	What is the probability that in a randomly chosen sample of 10 persons, exactly eight persons have travelled abroad?
+```{r}
+ansi=dbinom(8,10,0.56)
+ansi
+```
+j.	What is the probability that in a randomly chosen sample of 10 persons, exactly nine persons have travelled abroad?
+```{r}
+ansj=dbinom(9,10,0.56)
+ansj
+```
+k.	What is the probability that in a randomly chosen sample of 10 persons, all 10 persons have travelled abroad? 
+```{r}
+ansk=dbinom(10,10,0.56)
+ansk
+```
+3.	Plot the probability values as a Table / Bar graph/plot and interpret plot.
+```{r}
+barplot(dbinom(0:10,10,0.56))
+```
+Interpretation:Binomial probablities in this example are nearly normally distributed
+
+4.	What is the probability that in the randomly chosen sample of 100 persons at least 59 have travelled abroad?  
+Hint: Expected to perform Normal approximation for the binary distribution. 
+```{r}
+ansp=pbinom(59,100,0.56,lower.tail=F)
+ansd=dbinom(59,100,0.56)  #including the i th value that is 59
+ansp+ansd
+```
+Using normal approxiamation to binomail distribution
+```{r}
+
+mu<-100*0.56
+sigma<-sqrt(100*0.56*(1-0.56))
+pnorm(58.5,mu,sigma,lower.tail=F)
+
+```
